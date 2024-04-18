@@ -3,14 +3,13 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert("Roles", [
+    return queryInterface.bulkInsert("Users", [
       {
-        roleName: "Admin",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        roleName: "User",
+        email: "admin@test.com",
+        password: "admin",
+        userName: "admin",
+        image: null,
+        roleId: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -27,7 +26,7 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete("Roles", null, {});
+    return queryInterface.bulkDelete("Users", null, {});
     /**
      * Add commands to revert seed here.
      *

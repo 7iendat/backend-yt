@@ -13,14 +13,21 @@ module.exports = (sequelize, DataTypes) => {
         as: "role",
         foreignKey: "roleId",
       });
+
+      this.hasMany(models.Playlist, {
+        as: "playlists",
+        foreignKey: "playlistId",
+      });
     }
   }
   User.init(
     {
-      email: DataTypes.STRING,
       password: DataTypes.STRING,
       userName: DataTypes.STRING,
+      isLoginGoogle: DataTypes.BOOLEAN,
       image: DataTypes.STRING,
+      displayName: DataTypes.STRING,
+      isDelete: DataTypes.BOOLEAN,
       roleId: DataTypes.INTEGER,
     },
     {

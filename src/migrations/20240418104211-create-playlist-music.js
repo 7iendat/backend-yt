@@ -2,19 +2,28 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Roles", {
+    await queryInterface.createTable("Playlist_Musics", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      roleName: {
-        type: Sequelize.STRING,
+      playlistId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Playlists",
+          key: "id",
+        },
+        allowNull: false,
       },
-      isDelete: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+      musicId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Music",
+          key: "id",
+        },
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -27,6 +36,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Roles");
+    await queryInterface.dropTable("Playlist_Musics");
   },
 };
