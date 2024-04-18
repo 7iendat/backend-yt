@@ -2,19 +2,31 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Roles", {
+    await queryInterface.createTable("Playlists", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      roleName: {
+      title: {
         type: Sequelize.STRING,
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+        allowNull: false,
       },
       isDelete: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
+      },
+      isPublic: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true,
       },
       createdAt: {
         allowNull: false,
@@ -27,6 +39,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Roles");
+    await queryInterface.dropTable("Playlists");
   },
 };

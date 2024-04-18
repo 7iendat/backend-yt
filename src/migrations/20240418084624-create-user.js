@@ -9,17 +9,26 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      email: {
+      userName: {
         type: Sequelize.STRING,
       },
       password: {
         type: Sequelize.STRING,
       },
-      userName: {
-        type: Sequelize.STRING,
+      isLoginGoogle: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
+      displayName: {
+        type: Sequilize.STRING,
+      },
+      isDelete: {
+        type: Sequilize.BOOLEAN,
+      },
+
       image: {
         type: Sequelize.STRING,
+        defaultValue: "",
       },
       roleId: {
         type: Sequelize.INTEGER,
