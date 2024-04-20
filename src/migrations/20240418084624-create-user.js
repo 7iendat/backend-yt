@@ -1,37 +1,38 @@
 "use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up(queryInterface, DataTypes) {
     await queryInterface.createTable("Users", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
       },
       userName: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
       },
       password: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
       },
       isLoginGoogle: {
-        type: Sequelize.BOOLEAN,
+        type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
       displayName: {
-        type: Sequilize.STRING,
+        type: DataTypes.STRING,
       },
       isDelete: {
-        type: Sequilize.BOOLEAN,
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
       },
 
       image: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         defaultValue: "",
       },
       roleId: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         references: {
           model: "Roles",
           key: "id",
@@ -41,15 +42,15 @@ module.exports = {
 
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: DataTypes.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: DataTypes.DATE,
       },
     });
   },
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface, DataTypes) {
     await queryInterface.dropTable("Users");
   },
 };
