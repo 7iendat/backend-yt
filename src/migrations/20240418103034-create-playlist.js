@@ -11,7 +11,7 @@ module.exports = {
       },
       title: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       userId: {
         type: DataTypes.INTEGER,
@@ -19,7 +19,7 @@ module.exports = {
           model: "Users",
           key: "id",
         },
-        allowNull: false,
+        allowNull: true
       },
       isDelete: {
         type: DataTypes.BOOLEAN,

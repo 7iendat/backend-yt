@@ -11,7 +11,7 @@ module.exports = {
       },
       roleName: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       isDelete: {
         type: DataTypes.BOOLEAN,

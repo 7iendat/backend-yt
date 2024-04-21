@@ -2,11 +2,14 @@ const express = require("express");
 const connectDB = require("./src/config/connectDB");
 const configViewEngine = require("./src/config/viewEngine");
 const bodyParser = require("body-parser");
-const db = require("./src/models");
+const userRoute = require("./src/routes/music")
 
 require("dotenv").config();
 const app = express();
 app.use(express.json())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(userRoute)
 
 
 const PORT = process.env.PORT || 5000;

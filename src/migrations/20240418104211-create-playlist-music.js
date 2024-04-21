@@ -15,7 +15,7 @@ module.exports = {
           model: "Playlists",
           key: "id",
         },
-        allowNull: false,
+        allowNull: true
       },
       musicId: {
         type: DataTypes.INTEGER,
@@ -23,7 +23,7 @@ module.exports = {
           model: "Music",
           key: "id",
         },
-        allowNull: false,
+        allowNull: true
       },
       isDelete: {
         type: DataTypes.BOOLEAN,

@@ -11,23 +11,23 @@ module.exports = {
       },
       videoId: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       channelId: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       title: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       thumbnails: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       channelTitle: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       isDelete: {
         type: DataTypes.BOOLEAN,
