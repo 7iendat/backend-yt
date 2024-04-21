@@ -11,25 +11,31 @@ module.exports = {
       },
       userName: {
         type: DataTypes.STRING,
+        allowNull: false
       },
       password: {
         type: DataTypes.STRING,
+        allowNull: true
       },
       isLoginGoogle: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+        allowNull: false
       },
       displayName: {
         type: DataTypes.STRING,
+        allowNull: false
       },
       isDelete: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: 0,
+        allowNull: false
       },
 
       image: {
         type: DataTypes.STRING,
         defaultValue: "",
+        allowNull: false
       },
       roleId: {
         type: DataTypes.INTEGER,

@@ -11,6 +11,7 @@ module.exports = {
       },
       title: {
         type: DataTypes.STRING,
+        allowNull: false
       },
       userId: {
         type: DataTypes.INTEGER,
@@ -23,10 +24,12 @@ module.exports = {
       isDelete: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+        allowNull: false
       },
       isPublic: {
         type: DataTypes.BOOLEAN,
-        defaultValue: true,
+        defaultValue: false,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

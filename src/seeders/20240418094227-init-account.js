@@ -8,7 +8,6 @@ module.exports = {
         userName: "admin@test.com",
         password: "admin",
         displayName: "admin",
-        image: null,
         roleId: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
