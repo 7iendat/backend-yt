@@ -11,7 +11,7 @@ module.exports = {
       },
       userName: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       password: {
         type: DataTypes.STRING,
@@ -24,18 +24,17 @@ module.exports = {
       },
       displayName: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       },
       isDelete: {
         type: DataTypes.BOOLEAN,
-        defaultValue: 0,
+        defaultValue: false,
         allowNull: false
       },
 
       image: {
         type: DataTypes.STRING,
-        defaultValue: "",
-        allowNull: false
+        allowNull: true
       },
       roleId: {
         type: DataTypes.INTEGER,
@@ -43,7 +42,7 @@ module.exports = {
           model: "Roles",
           key: "id",
         },
-        allowNull: false,
+        allowNull: true,
       },
 
       createdAt: {

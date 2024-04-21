@@ -1,15 +1,105 @@
-const db = require("../models")
+const { where } = require("sequelize");
+const db = require("../models");
 
-
-app.post('/music', async (req, res) => {
-    const { videoId, channelId, title, thumbnails, channelTitle, isDelete } = req.body
-
+const addNewMusic = async (req, res) => {
+    const { videoId, channelId, title, thumbnails, channelTitle } = req.body;
     try{
-        const music = await db.Music.create({ videoId, channelId, title, thumbnails, channelTitle, isDelete })
-        return res.json(music)
+        const music = await db.Music.create({
+            videoId: videoId,
+            channelId: channelId,
+            title: title,
+            thumbnails: thumbnails,
+            channelTitle: channelTitle
+        });
+        return res.json(music);
     }catch (err){
-        console.log(err)
-        return res.status(500).json(err)
+        console.log(err);
+        return res.status(500).json({error: 'Error addNew Music'});
     }
+}
 
-})
+const getAllMusics = async (req, res) => {
+    try{
+        const musics = await db.Music.findAll();
+        return res.json(musics);
+    }catch (err){
+        console.log(err);
+        return res.status(500).json({error: 'Error getAllMusics'});
+    }
+}
+
+const getMusic = async (req, res) => {
+    const songId = req.params.id;
+    try{
+        const music = await db.Music.findOne({
+            where: {
+                id: songId
+            }
+        });
+        if(!music){
+            return res.status(400).json({error: `Muisc ID ${req.params.id} not found` });
+        }
+        return res.json(music);
+    }catch (err){
+        console.log(err);
+        return res.status(500).json({error: 'getMusic'});
+    }
+}
+
+const updateMusic = async (req, res) => {
+    const songId = req.params.id;
+    const isDelete = req.body.isDelete;
+    try{
+        const music = await db.Music.findOne({
+            where: { id: songId }
+        });
+        if(!music){
+            return res.status(400).json({error: `Muisc ID ${req.params.id} not found` });
+        }
+        await db.Music.update({
+            isDelete: isDelete
+        },{
+            where: {
+                id: songId
+            },
+        },);
+
+        const musicUpdated = await db.Music.findOne({
+            where: { id: songId }
+        });
+
+        return res.json(musicUpdated);
+    }catch (err){
+        console.log(err);
+        return res.status(500).json({ error: 'Error updateMuisc' });
+    }
+}
+
+const deteteMuisc = async (req, res) => {
+    const songId = req.params.id;
+    try{
+        const music = await db.Music.findOne({
+            where: { id: songId }
+        });
+        if(!music){
+            return res.status(400).json({error: `Muisc ID ${req.params.id} not found` });
+        }
+        await db.Music.destroy({
+            where: {
+                id: songId
+            }
+        });
+        return res.json({ message: 'Music deleted!'});
+    }catch(err){
+        console.log(err);
+        return res.status(500).json({ error: 'Error deleteMusic' });
+    }
+}
+
+module.exports = {
+    addNewMusic,
+    getAllMusics,
+    getMusic,
+    updateMusic,
+    deteteMuisc
+};
