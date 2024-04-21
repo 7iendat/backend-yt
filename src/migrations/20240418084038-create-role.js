@@ -11,10 +11,12 @@ module.exports = {
       },
       roleName: {
         type: DataTypes.STRING,
+        allowNull: false
       },
       isDelete: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
