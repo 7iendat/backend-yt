@@ -1,7 +1,7 @@
 const { where } = require("sequelize");
 const db = require("../models");
 
-const addNewMusic = async (req, res) => {
+const addMusic = async (req, res) => {
     const { videoId, channelId, title, thumbnails, channelTitle } = req.body;
     try{
         const music = await db.Music.create({
@@ -14,7 +14,7 @@ const addNewMusic = async (req, res) => {
         return res.json(music);
     }catch (err){
         console.log(err);
-        return res.status(500).json({error: 'Error addNew Music'});
+        return res.status(500).json({error: 'Error addMusic'});
     }
 }
 
@@ -71,7 +71,7 @@ const updateMusic = async (req, res) => {
         return res.json(musicUpdated);
     }catch (err){
         console.log(err);
-        return res.status(500).json({ error: 'Error updateMuisc' });
+        return res.status(500).json({ error: 'Error updateMusic' });
     }
 }
 
@@ -97,7 +97,7 @@ const deteteMuisc = async (req, res) => {
 }
 
 module.exports = {
-    addNewMusic,
+    addMusic,
     getAllMusics,
     getMusic,
     updateMusic,
