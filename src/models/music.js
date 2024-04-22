@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.hasMany(models.Playlist_Music, {
         as: "playlist_musics",
-        foreignKey: "musicId",
+        foreignKey: "id",
       });
     }
   }

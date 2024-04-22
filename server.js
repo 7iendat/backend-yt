@@ -6,6 +6,7 @@ const userRoute = require("./src/routes/music")
 const playlistRoute = require("./src/routes/playlist")
 
 require("dotenv").config();
+const db = require("./src/models");
 const app = express();
 app.use(express.json())
 app.use(bodyParser.json())
