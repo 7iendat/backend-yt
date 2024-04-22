@@ -11,12 +11,12 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.belongsTo(models.Role, {
         as: "role",
-        foreignKey: "roleId",
+        foreignKey: "id",
       });
 
       this.hasMany(models.Playlist, {
         as: "playlists",
-        foreignKey: "playlistId",
+        foreignKey: "id",
       });
     }
   }
@@ -24,10 +24,10 @@ module.exports = (sequelize, DataTypes) => {
     {
       password: DataTypes.STRING,
       userName: DataTypes.STRING,
-      isLoginGoogle: DataTypes.BOOLEAN,
-      image: DataTypes.STRING,
+      isLoginGoogle: { type: DataTypes.BOOLEAN, defaultValue: false },
+      image: { type: DataTypes.STRING, defaultValue: "" },
       displayName: DataTypes.STRING,
-      isDelete: DataTypes.BOOLEAN,
+      isDelete: { type: DataTypes.BOOLEAN, defaultValue: false },
       roleId: DataTypes.INTEGER,
     },
     {

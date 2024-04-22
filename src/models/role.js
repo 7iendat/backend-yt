@@ -11,14 +11,14 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.hasMany(models.User, {
         as: "users",
-        foreignKey: "userId",
+        foreignKey: "id",
       });
     }
   }
   Role.init(
     {
       roleName: DataTypes.STRING,
-      isDelete: DataTypes.BOOLEAN,
+      isDelete: { type: DataTypes.BOOLEAN, default: false },
     },
     {
       sequelize,
