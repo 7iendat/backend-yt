@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       playlistId: DataTypes.INTEGER,
       musicId: DataTypes.INTEGER,
+      isDelete: DataTypes.BOOLEAN
     },
     {
       sequelize,

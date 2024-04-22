@@ -1,43 +1,50 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up(queryInterface, DataTypes) {
     await queryInterface.createTable('Music', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: DataTypes.INTEGER
       },
       videoId: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING,
+        allowNull: true
       },
       channelId: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING,
+        allowNull: true
       },
       title: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING,
+        allowNull: true
       },
       thumbnails: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING,
+        allowNull: true
       },
       channelTitle: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING,
+        allowNull: true
       },
       isDelete: {
-        type: Sequelize.BOOLEAN
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE
       }
     });
   },
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface, DataTypes) {
     await queryInterface.dropTable('Music');
   }
 };
