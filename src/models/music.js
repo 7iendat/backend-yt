@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       videoId: DataTypes.STRING,
       channelId: DataTypes.STRING,
       title: DataTypes.STRING,
+      description: DataTypes.STRING,
       thumbnails: DataTypes.STRING,
       channelTitle: DataTypes.STRING,
       isDelete: DataTypes.BOOLEAN,

@@ -21,6 +21,10 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: true
       },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
       thumbnails: {
         type: DataTypes.STRING,
         allowNull: true
