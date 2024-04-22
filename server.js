@@ -3,6 +3,7 @@ const connectDB = require("./src/config/connectDB");
 const configViewEngine = require("./src/config/viewEngine");
 const bodyParser = require("body-parser");
 require("dotenv").config();
+const db = require("./src/models");
 const app = express();
 
 const PORT = process.env.PORT || 5000;

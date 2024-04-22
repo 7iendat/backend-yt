@@ -20,10 +20,10 @@ module.exports = {
         defaultValue: false,
       },
       displayName: {
-        type: Sequilize.STRING,
+        type: Sequelize.STRING,
       },
       isDelete: {
-        type: Sequilize.BOOLEAN,
+        type: Sequelize.BOOLEAN,
       },
 
       image: {
