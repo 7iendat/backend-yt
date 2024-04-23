@@ -49,7 +49,7 @@ const getMusic = async (req, res) => {
 
 const updateMusic = async (req, res) => {
     const songId = req.params.id;
-    const isDelete = req.body.isDelete;
+    const { videoId, channelId, title, description, thumbnails, channelTitle, isDelete } = req.body;
     try{
         const music = await db.Music.findOne({
             where: { id: songId }
@@ -58,6 +58,12 @@ const updateMusic = async (req, res) => {
             return res.status(400).json({error: `Muisc ID ${req.params.id} not found` });
         }
         await db.Music.update({
+            videoId: videoId,
+            channelId: channelId,
+            title: title,
+            description: description,
+            thumbnails: thumbnails,
+            channelTitle: channelTitle,
             isDelete: isDelete
         },{
             where: {
