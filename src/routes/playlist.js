@@ -6,12 +6,11 @@ const playlistMusicController = require("../controllers/playlistMusicController"
 router.route('/playlist')
     .post(playlistController.addPlaylist);
 router.route('/playlists')  .get(playlistController.getAllPlaylist) ;
+router.route('/playlists/playlistItem/:id')  .get(playlistController.getPlaylistItemMusic) ;
 router.route('/playlist/:id')
     .get(playlistController.getPlaylist)
     .put(playlistController.updatePlaylist)
     .delete(playlistController.detetePlaylist);
-
-
 router.route('/playlistItems')
     .post(playlistMusicController.addPlaylistMusic);
 router.route('/playlistItems')  .get(playlistMusicController.getAllPlaylistMusic) ;
