@@ -4,6 +4,8 @@ const configViewEngine = require("./src/config/viewEngine");
 const bodyParser = require("body-parser");
 const userRoute = require("./src/routes/music")
 const playlistRoute = require("./src/routes/playlist")
+const playlistMusicRoute = require("./src/routes/playlistMusic")
+
 var cors = require('cors');
 
 require("dotenv").config();
@@ -20,8 +22,7 @@ app.use(
 // start route
 app.use(userRoute)
 app.use(playlistRoute)
-
-
+app.use(playlistMusicRoute)
 
 const PORT = process.env.PORT || 5000;
 

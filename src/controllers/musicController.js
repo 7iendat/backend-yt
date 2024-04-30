@@ -2,17 +2,26 @@ const { where } = require("sequelize");
 const db = require("../models");
 
 const addMusic = async (req, res) => {
-    const { videoId, channelId, title, description, thumbnails, channelTitle } = req.body;
+    const { videoId, channelId, title, thumbnails, channelTitle } = req.body;
     try{
-        const music = await db.Music.create({
-            videoId: videoId,
-            channelId: channelId,
-            title: title,
-            description: description,
-            thumbnails: thumbnails,
-            channelTitle: channelTitle
+        const musicExist = await db.Music.findOne({
+            where: {
+                videoId: videoId
+            }
         });
-        return res.json(music);
+        if(musicExist){
+            return res.json(musicExist);
+        }
+        else{
+            const music = await db.Music.create({
+                videoId: videoId,
+                channelId: channelId,
+                title: title,
+                thumbnails: thumbnails,
+                channelTitle: channelTitle
+            });
+            return res.json(music);
+        }
     }catch (err){
         console.log(err);
         return res.status(500).json({error: 'Error addMusic'});
@@ -21,7 +30,11 @@ const addMusic = async (req, res) => {
 
 const getAllMusics = async (req, res) => {
     try{
-        const musics = await db.Music.findAll();
+        const musics = await db.Music.findAll({
+            where: {
+                isDelete: 0
+            }
+        });
         return res.json(musics);
     }catch (err){
         console.log(err);
@@ -34,7 +47,8 @@ const getMusic = async (req, res) => {
     try{
         const music = await db.Music.findOne({
             where: {
-                id: songId
+                id: songId,
+                isDelete: 0
             }
         });
         if(!music){
@@ -49,7 +63,7 @@ const getMusic = async (req, res) => {
 
 const updateMusic = async (req, res) => {
     const songId = req.params.id;
-    const { videoId, channelId, title, description, thumbnails, channelTitle, isDelete } = req.body;
+    const isDelete = req.body.isDelete;
     try{
         const music = await db.Music.findOne({
             where: { id: songId }
@@ -58,12 +72,6 @@ const updateMusic = async (req, res) => {
             return res.status(400).json({error: `Muisc ID ${req.params.id} not found` });
         }
         await db.Music.update({
-            videoId: videoId,
-            channelId: channelId,
-            title: title,
-            description: description,
-            thumbnails: thumbnails,
-            channelTitle: channelTitle,
             isDelete: isDelete
         },{
             where: {
@@ -82,7 +90,7 @@ const updateMusic = async (req, res) => {
     }
 }
 
-const deteteMuisc = async (req, res) => {
+const deleteMuisc = async (req, res) => {
     const songId = req.params.id;
     try{
         const music = await db.Music.findOne({
@@ -108,5 +116,5 @@ module.exports = {
     getAllMusics,
     getMusic,
     updateMusic,
-    deteteMuisc
+    deleteMuisc
 };
