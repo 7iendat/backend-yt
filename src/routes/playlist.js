@@ -1,6 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const playlistController = require('../controllers/playlistController')
+// const express = require('express');
+// const router = express.Router();
+// const playlistController = require('../controllers/playlistController')
+
 
 router.route('/playlist')
     .post(playlistController.addPlaylist);
@@ -19,4 +20,5 @@ router.route('/playlists/:userId')
 router.route('/playlists/playlistItem/:id')
     .get(playlistController.getPlaylistItemMusic);
 
-module.exports = router;
+
+// module.exports = router;

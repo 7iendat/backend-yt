@@ -1,5 +1,6 @@
-const { where } = require("sequelize");
-const db = require("../models");
+// const { where } = require("sequelize");
+// const db = require("../models");
+
 
 const addMusic = async (req, res) => {
     const { videoId, channelId, title, thumbnails, channelTitle } = req.body;
@@ -61,34 +62,36 @@ const getMusic = async (req, res) => {
     }
 }
 
-const updateMusic = async (req, res) => {
-    const songId = req.params.id;
-    const isDelete = req.body.isDelete;
-    try{
-        const music = await db.Music.findOne({
-            where: { id: songId }
-        });
-        if(!music){
-            return res.status(400).json({error: `Muisc ID ${req.params.id} not found` });
-        }
-        await db.Music.update({
-            isDelete: isDelete
-        },{
-            where: {
-                id: songId
-            },
-        },);
 
-        const musicUpdated = await db.Music.findOne({
-            where: { id: songId }
-        });
+// const updateMusic = async (req, res) => {
+//     const songId = req.params.id;
+//     const isDelete = req.body.isDelete;
+//     try{
+//         const music = await db.Music.findOne({
+//             where: { id: songId }
+//         });
+//         if(!music){
+//             return res.status(400).json({error: `Muisc ID ${req.params.id} not found` });
+//         }
+//         await db.Music.update({
+//             isDelete: isDelete
+//         },{
+//             where: {
+//                 id: songId
+//             },
+//         },);
 
-        return res.json(musicUpdated);
-    }catch (err){
-        console.log(err);
-        return res.status(500).json({ error: 'Error updateMusic' });
-    }
-}
+//         const musicUpdated = await db.Music.findOne({
+//             where: { id: songId }
+//         });
+
+//         return res.json(musicUpdated);
+//     }catch (err){
+//         console.log(err);
+//         return res.status(500).json({ error: 'Error updateMusic' });
+//     }
+// }
+
 
 const deleteMuisc = async (req, res) => {
     const songId = req.params.id;
@@ -118,3 +121,4 @@ module.exports = {
     updateMusic,
     deleteMuisc
 };
+
