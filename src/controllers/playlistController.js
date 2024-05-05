@@ -1,3 +1,4 @@
+
 const { where } = require("sequelize");
 const db = require("../models");
 const { raw } = require("body-parser");
@@ -86,16 +87,17 @@ const updatePlaylist = async (req, res) => {
             },
         },);
 
-        const playlistUpdated = await db.Playlist.findOne({
-            where: { id: playlistId }
-        });
+//         const playlistUpdated = await db.Playlist.findOne({
+//             where: { id: playlistId }
+//         });
 
-        return res.json(playlistUpdated);
-    }catch (err){
-        console.log(err);
-        return res.status(500).json({ error: 'Error updatePlaylist' });
-    }
-}
+//         return res.json(playlistUpdated);
+//     }catch (err){
+//         console.log(err);
+//         return res.status(500).json({ error: 'Error updatePlaylist' });
+//     }
+// }
+
 
 const deletePlaylist = async (req, res) => {
     const playlistId = req.params.id;
@@ -162,3 +164,4 @@ module.exports = {
     getPlaylistItemMusic,
     getPlaylistByUserId
 };
+
