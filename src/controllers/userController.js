@@ -3,16 +3,25 @@ const { useGoogleLogin } = require("@react-oauth/google");
 let sessions = {};
 
 let handleCreateNewUser = async (req, res) => {
-  if (!req.body.userName || !req.body.password) {
-    return res.status(400).json({
-      code: 400,
-      message: "Username and password are required fields",
-    });
+  if (!res.isLoginGoogle) {
+    if (!req.body.userName || !req.body.password) {
+      return res.status(400).json({
+        code: 400,
+        message: "Username and password are required fields",
+      });
+    }
   }
 
   let result = await userService.createNewUser(req.body);
 
   return res.status(200).json(result);
+};
+
+let handleGetUserByName = async (req, res) => {
+  let username = req.params.name;
+  console.log("name", username);
+  let result = await userService.handleCheckUserName(username);
+  return res.json({ isExisted: result });
 };
 
 let handleGetAllUser = async (req, res) => {
@@ -131,4 +140,5 @@ module.exports = {
   handleCreateNewAdmin,
   handleDeleteAccount,
   handleGetUserById,
+  handleGetUserByName,
 };

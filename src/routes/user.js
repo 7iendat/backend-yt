@@ -6,6 +6,7 @@ let router = express.Router();
 let initUserRoutes = (app) => {
   router.get("/api/get-all-user", userController.handleGetAllUser);
   router.get("/api/get-user-by-id/:id", userController.handleGetUserById);
+  router.get("/api/get-user-by-name/:name", userController.handleGetUserByName);
   router.post("/api/create-new-user", userController.handleCreateNewUser);
   router.post("/login", userController.handleLogin);
   router.get("/api/auth/me", userController.handleAuthMe);

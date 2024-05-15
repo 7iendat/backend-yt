@@ -20,6 +20,31 @@ let handleCheckUserName = (userName) => {
   });
 };
 
+let handleGetUserByName = (name) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await db.User.findOne({
+        where: {
+          userName: name,
+        },
+      });
+      if (user) {
+        resolve({
+          code: 1,
+          message: "User exited",
+        });
+      } else {
+        resolve({
+          code: 0,
+          data: user,
+        });
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 let handleHashUserPassword = (password) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -250,4 +275,6 @@ module.exports = {
   hanleGetAccountMe,
   deleteAccount,
   handleGetUserById,
+  handleGetUserByName,
+  handleCheckUserName,
 };
