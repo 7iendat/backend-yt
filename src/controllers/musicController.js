@@ -2,7 +2,7 @@ const { where } = require("sequelize");
 const db = require("../models");
 
 const addMusic = async (req, res) => {
-  const { videoId, channelId, title, thumbnails, channelTitle } = req.body;
+  const { videoId, channelId, title, description, thumbnails, channelTitle } = req.body;
   try {
     const musicExist = await db.Music.findOne({
       where: {
@@ -16,6 +16,7 @@ const addMusic = async (req, res) => {
         videoId: videoId,
         channelId: channelId,
         title: title,
+        description:description,
         thumbnails: thumbnails,
         channelTitle: channelTitle,
       });
