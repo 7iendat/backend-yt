@@ -5,11 +5,14 @@ const db = require("../models");
 
 const addPlaylistMusic = async (req, res) => {
     const { playlistId, musicId } = req.body;
+    console.log("ss", playlistId)
     try {
         const playlistMusic = await db.Playlist_Music.create({
             playlistId: playlistId,
-            musicId: musicId
+            musicId:musicId 
         });
+
+        console.log("ch", playlistMusic)
         return res.json(playlistMusic);
     } catch (err) {
         console.log(err);

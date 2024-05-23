@@ -19,3 +19,4 @@ router
   .get(playlistController.getPlaylistItemMusic);
 
 module.exports = router;
+module.exports = router;

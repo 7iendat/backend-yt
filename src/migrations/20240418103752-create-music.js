@@ -22,7 +22,7 @@ module.exports = {
         allowNull: true
       },
       description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true
       },
       thumbnails: {
