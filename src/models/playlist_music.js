@@ -10,22 +10,31 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.Music, { foreignKey: "musicId", as: "music" }); 
+      this.belongsTo(models.Music, { foreignKey: "musicId", as: "music" });
       this.belongsTo(models.Playlist, {
         foreignKey: "playlistId",
         as: "playlists",
+        onDelete: "CASCADE", // or 'SET NULL'
+        onUpdate: "CASCADE",
       });
 
-      models.Music.belongsToMany(models.Playlist, { through: Playlist_Music,as: 'music', foreignKey: 'musicId'   });
-      models.Playlist.belongsToMany(models.Music, { through: Playlist_Music,as: 'playlists', foreignKey: 'playlistId' });
-      
+      models.Music.belongsToMany(models.Playlist, {
+        through: Playlist_Music,
+        as: "music",
+        foreignKey: "musicId",
+      });
+      models.Playlist.belongsToMany(models.Music, {
+        through: Playlist_Music,
+        as: "playlists",
+        foreignKey: "playlistId",
+      });
     }
   }
   Playlist_Music.init(
     {
       playlistId: DataTypes.INTEGER,
       musicId: DataTypes.INTEGER,
-      isDelete: DataTypes.BOOLEAN
+      isDelete: DataTypes.BOOLEAN,
     },
     {
       sequelize,
