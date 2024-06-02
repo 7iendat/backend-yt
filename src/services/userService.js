@@ -76,6 +76,7 @@ let createNewUser = (data) => {
           code: 2,
           message: "UserName existed. Please use  another username.",
         });
+        return;
       }
 
       let hashUserPassword = await handleHashUserPassword(data.password);
