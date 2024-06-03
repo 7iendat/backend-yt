@@ -1,4 +1,4 @@
-const { where } = require("sequelize");
+const { where, Op } = require("sequelize");
 const db = require("../models");
 const { raw } = require("body-parser");
 
@@ -55,6 +55,9 @@ const getPlaylistByUserId = async (req, res) => {
       where: {
         userId: userId,
         isDelete: 0,
+        title: {
+          [Op.ne]: "Nhạc yêu thích",
+        }
       },
     });
     if (count <= 0) {

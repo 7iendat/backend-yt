@@ -1,5 +1,7 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, Transaction } = require("sequelize");
+const { Hooks } = require("sequelize/lib/hooks");
+const db = require("../models");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -33,7 +35,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "User",
-    }
+    },
   );
+
   return User;
 };
