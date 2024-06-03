@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       image: { type: DataTypes.STRING, defaultValue: "" },
       displayName: DataTypes.STRING,
       isDelete: { type: DataTypes.BOOLEAN, defaultValue: false },
-      roleId: { type: DataTypes.INTEGER, defaultValue: 1 },
+      roleId: { type: DataTypes.INTEGER, defaultValue: 2 },
     },
     {
       sequelize,
