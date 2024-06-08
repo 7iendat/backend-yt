@@ -11,9 +11,9 @@ let handleCheckUserName = (userName) => {
       let user = await db.User.findOne({ where: { userName: userName } });
 
       if (user) {
-        resolve(true);
+        resolve({ isExisted: true, user: user });
       }
-      resolve(false);
+      resolve({ isExisted: false });
     } catch (error) {
       reject(error);
     }
@@ -71,7 +71,7 @@ let createNewUser = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       let checkUserName = await handleCheckUserName(data.userName);
-      if (checkUserName) {
+      if (checkUserName.isExisted) {
         resolve({
           code: 2,
           message: "UserName existed. Please use  another username.",
@@ -154,7 +154,7 @@ let handleLogin = (data) => {
     let user;
     try {
       let checkUserName = await handleCheckUserName(data.userName);
-      if (checkUserName) {
+      if (checkUserName.isExisted) {
         user = await db.User.findOne({
           where: { userName: data.userName },
         });
@@ -202,7 +202,7 @@ let createNewAdmin = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       let checkAdminName = await handleCheckUserName(data.userName);
-      if (checkAdminName) {
+      if (checkAdminName.isExisted) {
         resolve({
           code: 2,
           message: "UserName existed. Please use  another username.",
