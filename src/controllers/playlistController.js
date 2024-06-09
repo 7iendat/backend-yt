@@ -19,7 +19,13 @@ const addPlaylist = async (req, res) => {
 
 const getAllPlaylist = async (req, res) => {
   try {
-    const playlist = await db.Playlist.findAll();
+    const playlist = await db.Playlist.findAll(
+      {
+        where: {
+          isDelete: 0
+        }
+      }
+    );
     return res.json(playlist);
   } catch (err) {
     console.log(err);
@@ -121,11 +127,17 @@ const deletePlaylist = async (req, res) => {
         .status(400)
         .json({ error: `Playlist ID ${req.params.id} not found` });
     }
-    await db.Playlist.destroy({
-      where: {
-        id: playlistId,
+    await db.Playlist.update(
+      {
+    
+        isDelete: 1,
       },
-    });
+      {
+        where: {
+          id: playlistId,
+        },
+      }
+    );
     return res.json({ message: "Playlist deleted!" });
   } catch (err) {
     console.log(err);
