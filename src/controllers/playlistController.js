@@ -155,8 +155,6 @@ const getPlaylistItemMusic = async (req, res) => {
       return res
         .status(400)
         .json({ error: `Playlist ID ${req.params.id} not found` });
-      // }
-      // return res.json(playlist);
     } else {
       try {
         const itemPlaylist = await db.Playlist_Music.findAll({
@@ -181,6 +179,33 @@ const getPlaylistItemMusic = async (req, res) => {
     return res.status(500).json({ error: "getPlaylist By ID" });
   }
 };
+
+const getLikedPlaylist = async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    const { count, rows } = await db.Playlist.findAndCountAll({
+      where: {
+        userId: userId,
+        isDelete: 0,
+        title: {
+          [Op.eq]: "Nhạc yêu thích",
+        }
+      },
+    });
+    if (count <= 0) {
+      return res
+        .status(400)
+        .json({
+          error: `No playlists for userId ${req.params.id} were found.`,
+        });
+    }
+    return res.json(rows);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Error getLikedPlaylist" });
+  }
+};
+
 module.exports = {
   addPlaylist,
   getPlaylist,
@@ -189,4 +214,5 @@ module.exports = {
   getAllPlaylist,
   getPlaylistItemMusic,
   getPlaylistByUserId,
+  getLikedPlaylist,
 };
