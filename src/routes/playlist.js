@@ -13,6 +13,7 @@ router
   .delete(playlistController.deletePlaylist);
 
 router.route("/playlists/:userId").get(playlistController.getPlaylistByUserId);
+router.route("/playlists/liked/:userId").get(playlistController.getLikedPlaylist);
 
 router
   .route("/playlists/playlistItem/:id")
