@@ -12,5 +12,5 @@ router.route('/playlistItems/:id')
     .put(playlistMusicController.updatePlaylistMusic)
     .delete(playlistMusicController.detetePlaylistMusic);
 router.route('/playlistDelete/:id').delete(playlistMusicController.deleteAllPlaylistMusic)
-// router.route('/playlistDeletes/:musicId&:idplaylistId').delete(playlistMusicController.deleteMucicsInPlaylist)
+router.route('/api/playlists/:playlistId/music/:musicId').delete(playlistMusicController.deleteMucicsInPlaylist)
 module.exports = router
