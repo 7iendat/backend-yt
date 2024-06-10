@@ -3,15 +3,36 @@ const db = require("../models");
 
 const addPlaylistMusic = async (req, res) => {
   const { playlistId, musicId } = req.body;
-  console.log("ss", playlistId);
   try {
-    const playlistMusic = await db.Playlist_Music.create({
-      playlistId: playlistId,
-      musicId: musicId,
+    const existingEntry = await db.Playlist_Music.findOne({
+      where: {
+        playlistId: playlistId,
+        musicId: musicId,
+      },
     });
 
-    console.log("ch", playlistMusic);
-    return res.json(playlistMusic);
+    if (existingEntry) {
+      return res
+        .status(400)
+        .json({ error: "The song is already in the playlist." });
+    } else {
+      const distinctPlaylists = await db.Playlist_Music.findAll({
+        attributes: ["playlistId"],
+        group: ["playlistId"],
+      });
+      const distinctPlaylistIds = distinctPlaylists.map(
+        (item) => item.playlistId
+      );
+      const playlistMusicPromises = distinctPlaylistIds.map((id) =>
+        db.Playlist_Music.create({
+          playlistId: id,
+          musicId: musicId,
+        })
+      );
+
+      const playlistMusic = await Promise.all(playlistMusicPromises);
+      return res.json(playlistMusic);
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Error addNewPlaylistMusic" });
@@ -20,7 +41,11 @@ const addPlaylistMusic = async (req, res) => {
 
 const getAllPlaylistMusic = async (req, res) => {
   try {
-    const playlistMusic = await db.Playlist_Music.findAll();
+    const playlistMusic = await db.Playlist_Music.findAll({
+      where: {
+        isDelete: 0,
+      },
+    });
     return res.json(playlistMusic);
   } catch (err) {
     console.log(err);
@@ -34,6 +59,7 @@ const getPlaylistMusic = async (req, res) => {
     const playlistMusic = await db.Playlist_Music.findOne({
       where: {
         id: reqId,
+        isDelete: 0,
       },
     });
     if (!playlistMusic) {
@@ -143,33 +169,39 @@ const deleteAllPlaylistMusic = async (req, res) => {
   }
 };
 
-// const deleteMucicsInPlaylist = async (req, res) => {
-//   const  musicId = req.params.id;
-//   const  playlistId= req.params.id;
-//   try {
-//     const playlistMusic = await db.Playlist_Music.findOne({
-//       where: {
-//         playlistId: playlistId,
-//         musicId: musicId,
-//       },
-//     });
-//     if (!playlistMusic) {
-//       return res
-//         .status(400)
-//         .json({ error: `Playlist ID ${req.params.id} not found` });
-//     }
-//     await db.Playlist_Music.destroy({
-//       where: {
-//         playlistId: playlistId,
-//         musicId: musicId,
-//       },
-//     });
-//     return res.json({ message: "Music deleted successfully!" });
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(500).json({ error: "getPlaylist" });
-//   }
-// };
+const deleteMucicsInPlaylist = async (req, res) => {
+  const playlistId = req.params.playlistId;
+  const musicId = req.params.musicId;
+
+  try {
+    const playlistMusic = await db.Playlist_Music.findOne({
+      where: {
+        playlistId: playlistId,
+        musicId: musicId,
+      },
+    });
+    if (!playlistMusic) {
+      return res
+        .status(400)
+        .json({ error: `Playlist ID ${req.params.id} not found` });
+    }
+    await db.Playlist_Music.update(
+      {
+        isDelete: 1,
+      },
+      {
+        where: {
+          playlistId: playlistId,
+          musicId: musicId,
+        },
+      }
+    );
+    return res.json({ message: "Music deleted successfully!" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "error music delete" });
+  }
+};
 // ------------------------------------------------
 
 module.exports = {
@@ -179,5 +211,5 @@ module.exports = {
   detetePlaylistMusic,
   getAllPlaylistMusic,
   deleteAllPlaylistMusic,
-  // deleteMucicsInPlaylist,
+  deleteMucicsInPlaylist,
 };

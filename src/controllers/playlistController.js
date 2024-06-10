@@ -19,13 +19,11 @@ const addPlaylist = async (req, res) => {
 
 const getAllPlaylist = async (req, res) => {
   try {
-    const playlist = await db.Playlist.findAll(
-      {
-        where: {
-          isDelete: 0
-        }
-      }
-    );
+    const playlist = await db.Playlist.findAll({
+      where: {
+        isDelete: 0,
+      },
+    });
     return res.json(playlist);
   } catch (err) {
     console.log(err);
@@ -63,15 +61,13 @@ const getPlaylistByUserId = async (req, res) => {
         isDelete: 0,
         title: {
           [Op.ne]: "Nhạc yêu thích",
-        }
+        },
       },
     });
     if (count <= 0) {
-      return res
-        .status(400)
-        .json({
-          error: `No playlists for userId ${req.params.id} were found.`,
-        });
+      return res.status(400).json({
+        error: `No playlists for userId ${req.params.id} were found.`,
+      });
     }
     return res.json(rows);
   } catch (err) {
@@ -129,7 +125,6 @@ const deletePlaylist = async (req, res) => {
     }
     await db.Playlist.update(
       {
-    
         isDelete: 1,
       },
       {
@@ -149,7 +144,7 @@ const getPlaylistItemMusic = async (req, res) => {
   const playlistId = req.params.id;
   try {
     const playlist = await db.Playlist.findOne({
-      where: { id: playlistId },
+      where: { id: playlistId, isDelete: 0 },
     });
     if (!playlist) {
       return res
@@ -158,7 +153,7 @@ const getPlaylistItemMusic = async (req, res) => {
     } else {
       try {
         const itemPlaylist = await db.Playlist_Music.findAll({
-          where: { playlistId: playlistId },
+          where: { playlistId: playlistId ,isDelete: 0 },
           include: [
             {
               model: db.Music,
