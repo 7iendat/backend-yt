@@ -75,35 +75,39 @@ const getPlaylistMusic = async (req, res) => {
 };
 
 const updatePlaylistMusic = async (req, res) => {
-  const playlistMusicId = req.params.id;
-  const { playlistId, musicId, isDelete } = req.body;
+  const { playlistId, musicId } = req.params;
+  const { isDelete } = req.body;
   try {
     const playlistMusic = await db.Playlist_Music.findOne({
-      where: { id: playlistMusicId },
+      where: {
+        playlistId: playlistId,
+        musicId: musicId,
+        isDelete: 0,
+      },
     });
     if (!playlistMusic) {
       return res
         .status(400)
-        .json({ error: `Playlist ID ${req.params.id} not found` });
+        .json({ error: `Playlist Music not found in PUT Method` });
     }
     await db.Playlist_Music.update(
       {
-        playlistId: playlistId,
-        musicId: musicId,
         isDelete: isDelete,
       },
       {
         where: {
-          id: playlistMusicId,
+          playlistId: playlistId,
+          musicId: musicId,
+          isDelete: 0,
         },
       }
     );
 
-    const playlistUpdated = await db.Playlist_Music.findOne({
-      where: { id: playlistMusicId },
-    });
+    // const playlistUpdated = await db.Playlist_Music.findOne({
+    //   where: { id: playlistMusicId },
+    // });
 
-    return res.json(playlistUpdated);
+    // return res.json(playlistUpdated);
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Error updatePlaylistMusic" });

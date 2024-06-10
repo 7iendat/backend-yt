@@ -19,4 +19,6 @@ router
   .route("/playlists/playlistItem/:id")
   .get(playlistController.getPlaylistItemMusic);
 
+router.route("/playlists/playlistItem/:playlistId/:videoId").get(playlistController.getSongFromPlaylist);
+
 module.exports = router;

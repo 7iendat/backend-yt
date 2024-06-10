@@ -13,15 +13,15 @@ let handleCreateNewUser = async (req, res) => {
   }
 
   let result = await userService.createNewUser(req.body);
-  console.log("r", result);
+  // console.log("r", result);
   return res.status(200).json(result);
 };
 
 let handleGetUserByName = async (req, res) => {
   let username = req.params.name;
-  console.log("name", username);
+  // console.log("name", username);
   let result = await userService.handleCheckUserName(username);
-  console.log("userBE", result);
+  // console.log("userBE", result);
   return res.json({ isExisted: result.isExisted, user: result.user });
 };
 

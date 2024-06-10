@@ -41,9 +41,10 @@ const getPlaylist = async (req, res) => {
       },
     });
     if (!playlist) {
-      return res
-        .status(400)
-        .json({ error: `Playlist ID ${req.params.id} not found` });
+      return res.json({
+        statusCode: 400,
+        error: `Playlist ID ${req.params.id} not found`,
+      });
     }
     return res.json(playlist);
   } catch (err) {
@@ -126,13 +127,7 @@ const deletePlaylist = async (req, res) => {
     await db.Playlist.update(
       {
         isDelete: 1,
-      },
-      {
-        where: {
-          id: playlistId,
-        },
-      }
-    );
+    });
     return res.json({ message: "Playlist deleted!" });
   } catch (err) {
     console.log(err);
@@ -150,6 +145,8 @@ const getPlaylistItemMusic = async (req, res) => {
       return res
         .status(400)
         .json({ error: `Playlist ID ${req.params.id} not found` });
+      // }
+      // return res.json(playlist);
     } else {
       try {
         const itemPlaylist = await db.Playlist_Music.findAll({
@@ -170,6 +167,51 @@ const getPlaylistItemMusic = async (req, res) => {
       }
     }
   } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "getPlaylist By ID" });
+  }
+};
+
+const getSongFromPlaylist = async (req, res) => {
+  const { playlistId, videoId } = req.params;
+  try {
+    console.log("PLAYLIST ID", playlistId);
+    console.log("VIDEO ID", videoId);
+    const playlist = await db.Playlist.findOne({
+      where: { id: playlistId },
+    });
+    if (!playlist) {
+      return res
+        .status(400)
+        .json({ error: `Playlist ID ${req.params.id} not found` });
+    } else {
+      try {
+        console.log("HELLO");
+        const itemPlaylist = await db.Playlist_Music.findAll({
+          where: { playlistId: playlistId, isDelete: 0 },
+          include: [
+            {
+              model: db.Music,
+              as: "music",
+              where: {
+                videoId: {
+                  [Op.eq]: videoId,
+                }
+              }
+            },
+          ],
+          raw: true,
+          nest: true,
+        });
+        return res.json(itemPlaylist);
+      } catch (err) {
+        console.log("LOI 1");
+        console.log(err);
+        return res.status(500).json({ error: "Error get Item Musics" });
+      }
+    }
+  } catch (err) {
+    console.log("LOI 2");
     console.log(err);
     return res.status(500).json({ error: "getPlaylist By ID" });
   }
@@ -209,5 +251,6 @@ module.exports = {
   getAllPlaylist,
   getPlaylistItemMusic,
   getPlaylistByUserId,
-  getLikedPlaylist,
+  getSongFromPlaylist,
+  getLikedPlaylist
 };
